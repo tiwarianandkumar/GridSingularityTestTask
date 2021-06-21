@@ -15,7 +15,7 @@ public class Simulation {
     @FindBy(xpath = "//*[@id='textarea-field-description']")
     WebElement textAreaSimulationDescription;
 
-    @FindBy(xpath = "//*[@id='root']/div/div[2]/div[2]/div/div/div[1]/div[3]/div/div/select")
+    @FindBy(xpath = "/html/body/div[1]/div/div[2]/div[2]/div/div/div[1]/div[3]/div/div/select")
     WebElement selectProject;
 
     @FindBy(xpath = "//*[@id='input-field-startDate']")
@@ -27,10 +27,10 @@ public class Simulation {
     @FindBy(xpath = "//*[@id='root']/div/div[2]/header/div[3]/button[2]/span")
     WebElement linkNewProject;
 
-    @FindBy(xpath = "//*[@id='root']/div/div[2]/div[2]/div/div/div[1]/div[6]/div/div/select")
+    @FindBy(xpath = "/html/body/div[1]/div/div[2]/div[2]/div/div/div[1]/div[6]/div/div/select")
     WebElement selectSolarProfile;
 
-    @FindBy(xpath = "//*[@id='root']/div/div[2]/div[2]/div/div/div[1]/div[7]/div/div/select")
+    @FindBy(xpath = "/html/body/div[1]/div/div[2]/div[2]/div/div/div[1]/div[7]/div/div/select")
     WebElement selectSpotMarketType;
 
     @FindBy(xpath = "//*[@id='input-field-marketCount']")
@@ -39,16 +39,16 @@ public class Simulation {
     @FindBy(xpath = "//*[@id='input-field-slotLengthMinutes']")
     WebElement inputLengthOfSpotMarket;
 
-    @FindBy(xpath = "//*[@id=input-field-tickLengthSeconds']")
+    @FindBy(xpath = "/html/body/div[1]/div/div[2]/div[2]/div/div/div[1]/div[10]/div/label/div/input")
     WebElement inputTickLength;
 
-    @FindBy(xpath = "//*[@id='root']/div/div[2]/div[2]/div/div/div[1]/div[11]/div/div/select']")
+    @FindBy(xpath = "/html/body/div[1]/div/div[2]/div[2]/div/div/div[1]/div[11]/div/div/select")
     WebElement selectGridFees;
 
-    @FindBy(xpath = "//*[@id='input-field-slotLengthRealtimeSeconds']")
+    @FindBy(xpath = "/html/body/div[1]/div/div[2]/div[2]/div/div/div[1]/div[12]/div/label/div/input")
     WebElement inputMarketSlotRealTimeDuration;
 
-    @FindBy(xpath = "//*[@id='root']/div/div[2]/div[2]/div/div/div[2]/button")
+    @FindBy(xpath = "/html/body/div[1]/div/div[2]/div[2]/div/div/div[2]/button")
     WebElement buttonNext;
 
     public Simulation(ChromeDriver driver)

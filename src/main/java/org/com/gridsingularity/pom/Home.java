@@ -9,7 +9,7 @@ public class Home {
 
     private ChromeDriver driver;
 
-    @FindBy(xpath = "//*[@id='icon_projects']/path")
+    @FindBy(xpath = "/html/body/div[1]/div/div[1]/nav/div[2]/div[1]/div[2]/div/div/button")
     WebElement linkProject;
 
 

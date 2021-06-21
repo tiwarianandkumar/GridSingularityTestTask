@@ -1,16 +1,19 @@
 package org.com.gridsingularity.stepdefinitions;
 
 import cucumber.api.PendingException;
+import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.com.gridsingularity.pom.*;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
@@ -35,6 +38,16 @@ public class MyStepdefs {
         driver = new ChromeDriver(desiredCapabilities);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    }
+
+    @After
+    public void tearDown()
+    {
+        if(driver!=null) {
+            driver.manage().deleteAllCookies();
+            driver.close();
+            driver.quit();
+        }
     }
 
 
@@ -123,8 +136,9 @@ public class MyStepdefs {
     }
 
     @Then("^User Should be signed up successfully$")
-    public void userShouldBeSignedUpSuccessfully() {
+    public void userShouldBeSignedUpSuccessfully() throws IOException {
     String expectedsuccessMessage = "Thank you. Please check your email to confirm your account.";
+    getSignUp().takeScreenShot();
     String actualSuccessMessage = getSignUp().getSuccessMessage().getText();
     Assert.assertEquals(expectedsuccessMessage,actualSuccessMessage);
     }
@@ -145,10 +159,10 @@ public class MyStepdefs {
     }
 
     @Then("^User should be logged in successfully$")
-    public void userShouldBeLoggedInSuccessfully() {
-        driver.navigate().refresh();
+    public void userShouldBeLoggedInSuccessfully() throws IOException {
         String expectedHomePageText = "Home";
-        String actualHomePageText = driver.findElementByXPath("//*[@id='root']/div/div[2]/header/h1").getText();
+        String actualHomePageText = driver.findElementByXPath("/html/body/div[1]/div/div[2]/header/h1").getText();
+        getLogin().takeScreenShot();
         Assert.assertEquals(expectedHomePageText,actualHomePageText);
     }
 
@@ -162,38 +176,138 @@ public class MyStepdefs {
     public void userIsLoggedInSuccessfully() throws IOException {
         Login page = getLogin().validateLogin("anandkumart.1993@gmail.com","Grid_SingularityTest001");
         String expectedHomePageText = "Home";
-        String actualHomePageText = page.getDriver().findElementByXPath("//*[@id='root']/div/div[2]/header/h1").getText();
+        String actualHomePageText = page.getDriver().findElementByXPath("/html/body/div[1]/div/div[2]/header/h1").getText();
         Assert.assertEquals(expectedHomePageText,actualHomePageText);
     }
 
     @When("^User click on left side project link on home page$")
     public void userClickOnLeftSideProjectLinkOnHomePage() {
-
+        getHome().getLinkProject().click();
     }
 
     @And("^User click on new project link$")
     public void userClickOnNewProjectLink() {
+        getProject().getLinkNewProject().click();
     }
 
     @And("^User enters new project name as \"([^\"]*)\"$")
-    public void userEntersNewProjectNameAs(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void userEntersNewProjectNameAs(String projectName) throws Throwable {
+       getProject().getInputProjectName().sendKeys(projectName);
     }
 
     @And("^User enters new project description as \"([^\"]*)\"$")
-    public void userEntersNewProjectDescriptionAs(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void userEntersNewProjectDescriptionAs(String projectDescription) throws Throwable {
+       getProject().getTextAreaProjectDescription().sendKeys(projectDescription);
     }
 
     @And("^User click on add button for new project creation$")
     public void userClickOnAddButtonForNewProjectCreation() {
+        getProject().getButtonAdd().click();
     }
 
     @Then("^Verify if the new Project is Created with the name \"([^\"]*)\"$")
-    public void verifyIfTheNewProjectIsCreatedWithTheName(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void verifyIfTheNewProjectIsCreatedWithTheName(String expectedProjectName) throws Throwable {
+        String actualProjectName = getProject().getDriver().findElementByXPath("/html/body/div[1]/div/div[2]/div[2]/div/div/section/div[1]/div/div[1]/span/span").getText();
+        Assert.assertEquals(expectedProjectName,actualProjectName);
+    }
+
+
+    @Then("^User click on the expand link for project \"([^\"]*)\"$")
+    public void userClickOnTheExpandLinkForProject(String projectName) throws Throwable {
+       getProject().getDriver().findElementByXPath("/html/body/div[1]/div/div[2]/div[2]/div/div/section/div[1]/div/div[1]/span/div/div").click();
+    }
+
+    @Then("^User click on new simulation link on project page$")
+    public void userClickOnNewSimulationLinkOnProjectPage() {
+        getProject().getLinkNewSimulation().click();
+    }
+
+    @And("^User enters simulation name as \"([^\"]*)\"$")
+    public void userEntersSimulationNameAs(String simulationName) throws Throwable {
+        getSimulation().getInputSimulationName().clear();
+       getSimulation().getInputSimulationName().sendKeys(simulationName);
+    }
+
+    @And("^User enters simulation description as \"([^\"]*)\"$")
+    public void userEntersSimulationDescriptionAs(String simulationDescription) throws Throwable {
+        getSimulation().getTextAreaSimulationDescription().clear();
+        getSimulation().getTextAreaSimulationDescription().sendKeys(simulationDescription);
+    }
+
+    @And("^User Select simulation project as \"([^\"]*)\"$")
+    public void userSelectSimulationProjectAs(String simulationProject) throws Throwable {
+       Select select = new Select(getSimulation().getSelectProject());
+       select.selectByVisibleText(simulationProject);
+
+    }
+
+    @And("^User enters simulation start date as \"([^\"]*)\"$")
+    public void userEntersSimulationStartDateAs(String simulationStartDate) throws Throwable {
+        getSimulation().getInputStartDate().clear();
+        getSimulation().getInputStartDate().sendKeys(simulationStartDate);
+    }
+
+    @And("^User enters simulation end date as \"([^\"]*)\"$")
+    public void userEntersSimulationEndDateAs(String simulationEndDate) throws Throwable {
+        getSimulation().getInputEndDate().clear();
+        getSimulation().getInputEndDate().sendKeys(simulationEndDate);
+    }
+
+    @And("^User select simulation solar profile as \"([^\"]*)\"$")
+    public void userSelectSimulationSolarProfileAs(String solarProfile) throws Throwable {
+        Select select = new Select(getSimulation().getSelectSolarProfile());
+        select.selectByVisibleText(solarProfile);
+    }
+
+    @And("^User select simulation spot market type as \"([^\"]*)\"$")
+    public void userSelectSimulationSpotMarketTypeAs(String spotMarketTypeAs) throws Throwable {
+        Select select =  new Select(getSimulation().getSelectSpotMarketType());
+        select.selectByVisibleText(spotMarketTypeAs);
+    }
+
+    @And("^User enters simulation no of spot market as \"([^\"]*)\"$")
+    public void userEntersSimulationNoOfSpotMarketAs(String noOfSpotMarket) throws Throwable {
+        getSimulation().getInputNumberofSpotMarkets().clear();
+        getSimulation().getInputNumberofSpotMarkets().sendKeys(noOfSpotMarket);
+    }
+
+    @And("^User enters simulation length of spot market as \"([^\"]*)\"$")
+    public void userEntersSimulationLengthOfSpotMarketAs(String lengthOfSpotMarket) throws Throwable {
+        getSimulation().getInputLengthOfSpotMarket().clear();
+        getSimulation().getInputLengthOfSpotMarket().sendKeys(lengthOfSpotMarket);
+    }
+
+    @And("^User enters simulation trick length as \"([^\"]*)\"$")
+    public void userEntersSimulationTrickLengthAs(String trickLength) throws Throwable {
+       getSimulation().getInputTickLength().sendKeys(trickLength);
+    }
+
+    @And("^User select grid fees as \"([^\"]*)\"$")
+    public void userSelectGridFeesAs(String gridFees) throws Throwable {
+        Select select = new Select(getSimulation().getSelectGridFees());
+        select.selectByVisibleText(gridFees);
+    }
+
+    @And("^User enters simulation Market slot real time duration as \"([^\"]*)\"$")
+    public void userEntersSimulationMarketSlotRealTimeDurationAs(String marketSlotrealTimeDurationAs) throws Throwable {
+      getSimulation().getInputMarketSlotRealTimeDuration().sendKeys(marketSlotrealTimeDurationAs);
+    }
+
+    @And("^User click on next button on simulation page$")
+    public void userClickOnNextButtonOnSimulationPage() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(getSimulation().getDriver(),10);
+        wait.until(ExpectedConditions.visibilityOf(getSimulation().getButtonNext()));
+        getSimulation().getButtonNext().click();
+        Thread.sleep(3000);
+
+    }
+
+    @Then("^Verify if the new simulation has been created$")
+    public void verifyIfTheNewSimulationHasBeenCreated() {
+        String actualText = "Modelling";
+        WebDriverWait wait = new WebDriverWait(getSimulation().getDriver(),10);
+        wait.until(ExpectedConditions.visibilityOf(getSimulation().getDriver().findElement(By.xpath("/html/body/div[1]/div/div[2]/header/h1"))));
+        String expectedText =  getSimulation().getDriver().findElementByXPath("/html/body/div[1]/div/div[2]/header/h1").getText();
+        Assert.assertEquals(actualText,expectedText);
     }
 }

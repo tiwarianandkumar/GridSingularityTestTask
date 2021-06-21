@@ -1,4 +1,4 @@
-Feature: To Test & Verify if User is able to craete a new project
+Feature: To Test & Verify if User is able to create a new project
 
   Background:
 

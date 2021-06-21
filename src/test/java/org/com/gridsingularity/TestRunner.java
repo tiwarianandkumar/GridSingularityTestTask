@@ -6,7 +6,8 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(Cucumber.class)
-@CucumberOptions(
+@CucumberOptions(plugin ={"pretty","html:target/cucumber-reports/cucumber.html",
+                          "json:target/cucumber-reports/cucumber.json"},
                  features = "src/test/java/org/com/gridsingularity/resources",
                  glue = {"org.com.gridsingularity"})
 public class TestRunner {

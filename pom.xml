@@ -50,12 +50,6 @@
           <version>2.4.0</version>
       </dependency>
 
-<!--      <dependency>-->
-<!--          <groupId>org.seleniumhq.selenium</groupId>-->
-<!--          <artifactId>selenium-server</artifactId>-->
-<!--          <version>3.141.59</version>-->
-<!--      </dependency>-->
-
       <dependency>
           <groupId>org.seleniumhq.selenium</groupId>
           <artifactId>selenium-java</artifactId>
@@ -77,6 +71,29 @@
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
+          <plugin>
+              <groupId>net.masterthought</groupId>
+              <artifactId>maven-cucumber-reporting</artifactId>
+              <version>5.3.0</version>
+              <executions>
+                  <execution>
+                      <id>execution</id>
+                      <phase>verify</phase>
+                      <goals>
+                          <goal>generate</goal>
+                      </goals>
+                      <configuration>
+                          <projectName>Grid Singularity-Cucumber-Junit</projectName>
+                          <skip>false</skip>
+                          <outputDirectory>reports/html-reports</outputDirectory>
+                          <inputDirectory>target/cucumber-reports</inputDirectory>
+                          <jsonFiles>
+                              <param>**/*.json</param>
+                          </jsonFiles>
+                      </configuration>
+                  </execution>
+              </executions>
+          </plugin>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>

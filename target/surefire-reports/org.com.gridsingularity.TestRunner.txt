@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+Test set: org.com.gridsingularity.TestRunner
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 273.604 s <<< FAILURE! - in org.com.gridsingularity.TestRunner
+EMPTY_NAME(To Test Successfull Sign Up for User)  Time elapsed: 139.981 s  <<< ERROR!
+cucumber.runtime.CucumberException: Failed to instantiate class org.com.gridsingularity.stepdefinitions.MyStepdefs
+Caused by: java.lang.reflect.InvocationTargetException
+Caused by: org.openqa.selenium.WebDriverException: 
+chrome not reachable
+  (Driver info: chromedriver=91.0.4472.19 (1bf021f248676a0b2ab3ee0561d83a59e424c23e-refs/branch-heads/4472@{#288}),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 71.42 seconds
+Build info: version: '2.39.0', revision: '14fa800511cc5d66d426e08b0b2ab926c7ed7398', time: '2013-12-16 13:18:38'
+System info: host: 'Anand-PC', ip: '192.168.29.83', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_291'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+
